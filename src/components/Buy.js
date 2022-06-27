@@ -14,31 +14,28 @@ class Buy extends Component {
     return (
       <form className="mb-3" onSubmit={(event) => {
         event.preventDefault();
+        // After submitting the amount of ethereum we want to use in order to buy TFG Tokens, these information is adjusted with the aim of having no problems
+        // with the smart-contracts that is trying to interact with
         let etherAmount;
         etherAmount = this.input.value.toString();
-        console.log("Abans de ferhi el toWei(ETH):" + etherAmount);
         let m_tokensToBuy = etherAmount / this.props.exchangeRate;
         etherAmount = window.web3.utils.toWei(etherAmount, 'Ether');
-        console.log("Despres de ferhi el toWei(ETH):" + etherAmount);
-        console.log("Abans de ferhi el toWei(TokensToBuy):" + m_tokensToBuy.toFixed(4));
-        let a = m_tokensToBuy * 1000000000000000000;
-        console.log(a);
-        this.props.buyTokens(etherAmount, a);
+        let a_tokensToBuy = m_tokensToBuy * 1000000000000000000;
+        this.props.buyTokens(etherAmount, a_tokensToBuy);
     }}>
       <div>
         <label className="float-left"><b>Input</b></label>
         <span className="float-right text-muted">
-          Balance: {window.web3.utils.fromWei(this.props.ethBalance, 'Ether')}
+          Balance: {this.props.ethBalance}
         </span>
       </div>
       <div className="input-group mb-4">
         <input
-          type="text"
+          type="number"
           onChange={(event) =>{
-              console.log("changing...");
               const etherAmount = this.input.value.toString();
               this.setState({
-                  output: etherAmount / (65/parseInt(this.props.ethereumPrice))
+                  output: etherAmount / (this.props.token_price/parseInt(this.props.ethereumPrice))
               })
           }}
           ref={(input) => {
@@ -46,6 +43,7 @@ class Buy extends Component {
           }}
           className="form-control form-control-lg"
           placeholder="0"
+          step="0.1"
           required />
         <div className="input-group-append">
           <div className="input-group-text">
@@ -57,7 +55,7 @@ class Buy extends Component {
       <div>
         <label className="float-left"><b>Output</b></label>
         <span className="float-right text-muted">
-          Balance: {window.web3.utils.fromWei(this.props.tokenBalance, 'Ether')}
+          Balance: {this.props.tokenBalance}
         </span>
       </div>
       <div className="input-group mb-2">
@@ -77,7 +75,7 @@ class Buy extends Component {
       </div>
       <div className="mb-5">
         <span className="float-left text-muted">Exchange Rate</span>
-        <span className="float-right text-muted">1 TFG Token (65$) = {(65 / this.props.ethereumPrice).toFixed(4)} ETH</span>
+        <span className="float-right text-muted">1 TFG Token (65$) = {(this.props.token_price / this.props.ethereumPrice).toFixed(4)} ETH</span>
       </div>
       <button type="submit" className="btn btn-primary btn-block btn-lg">Swap</button>
       </form>

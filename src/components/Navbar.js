@@ -8,18 +8,19 @@ class Navbar extends Component {
 
           <a
             className="navbar-brand col-sm-3 col-md-2 mr-0"
-            href="#"
-            target="_blank"
+            href=""
             rel="noopener noreferrer"
           >
-            TFGdapp
+            <h4 >TFG Decentralized Application</h4>
           </a>
           
           <ul className='navbar-nav px-3'>
               <li className='nav-item text-nowrap d-none d-sm-none d-sm-block'>
+                <button type="button" className="btn btn-outline-light " disabled>
                   <small className='text-light'>
-                      <small id="account">{this.props.account}</small>
+                      <small className='h6' id="account">{this.props.account}</small>
                   </small>
+                </button>
               </li>
           </ul>
         </nav>

@@ -8,6 +8,9 @@ require('chai')
     .use(require('chai-as-promised'))
     .should()
 
+
+// These are the tests for the local blockchain Ganache and are made on previous versions 
+// of the current Smart-Cobntracts of the project that have less functionalities    
 contract('TFGSwap', ([deployer, investor]) => {
     let token, tfgSwap;
     before(async () => {
